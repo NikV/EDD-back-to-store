@@ -1,17 +1,26 @@
 <?php
 /**
  * Plugin Name: EDD Back to store
+ * Description: Allows for setting of a URL that leads user to a page where they can continue shopping
+ * Author: Nikhil Vimal
+ * Author URI: http://nik.techvoltz.com
+ * Version: 1.0
+ * Plugin URI:
+ * License: GNU GPLv2+
  */
+
 
 /**
  * Add the link after the reciept table
  */
-function after_purchase_form() {
-	echo '<a href="' . esc_url( edd_get_option('back_to_store_link') ) . '">Continue shopping?</a>';
+function edd_back_to_store_after_purchase_form() {
+	if ( ! empty ( edd_get_option()) ) {
+		echo '<a href="' . esc_url( edd_get_option( 'back_to_store_link' ) ) . '">Continue shopping?</a>';
+	}
 }
-add_action('edd_payment_receipt_after_table', 'after_purchase_form');
+add_action('edd_payment_receipt_after_table', 'edd_back_to_store_after_purchase_form');
 
-function back_to_store_options( $settings ) {
+function edd_back_to_store_options( $settings ) {
 	$back_to_store_settings = array(
 		array(
 			'id' => 'back_to_store_option_heading',
@@ -33,4 +42,4 @@ function back_to_store_options( $settings ) {
 	return array_merge($settings, $back_to_store_settings);
 
 }
-add_filter('edd_settings_extensions', 'back_to_store_options');
+add_filter('edd_settings_extensions', 'edd_back_to_store_options');
